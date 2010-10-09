@@ -36,7 +36,8 @@ if(get_magic_quotes_gpc())
 }
 
 //enable html exception handler
-set_exception_handler('clydePhpExceptionHandler');
+if (!isset($_ENV['SHELL']))
+	set_exception_handler('clydePhpExceptionHandler');
 
 //if exists a file with custom boostrap
 //include it
