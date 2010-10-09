@@ -315,11 +315,14 @@ function download_document($filename, $mimetype = 'application/octet-stream')
 {
 	if(!file_exists($filename) || !is_readable($filename)) return false;
 	$base = basename($filename);
-	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-	header("Content-Disposition: attachment; filename=$base");
-	header("Content-Length: " . filesize($filename));
-	header("Content-Type: $mimetype");
-	readfile($filename);
+	
+	$resp = new HttpResponse();
+	$resp->addHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0")
+	     ->addHeader("Content-Disposition","attachment; filename=$base")
+	     ->addHeader("Content-Length", filesize($filename))
+	     ->addHeader("Content-Type",$mimetype)
+	     ->setBody(file_get_contents($filename))
+	     ->send();	
 	exit();
 }
 
