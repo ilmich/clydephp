@@ -39,6 +39,8 @@ class ClassLoader
 		foreach ($this->_getDirs($path) as $dir) {
 			$this->addClassPath($dir);
 		}
+		
+		return $this;
 		 
 	}
 

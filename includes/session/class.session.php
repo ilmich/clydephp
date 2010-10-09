@@ -20,6 +20,8 @@ class Session {
 		array($obj,"destroy"),
 		array($obj,"gc")
 		);
+		
+		return $this;
 	}
 
 	public static function getInstance() {
@@ -59,6 +61,8 @@ class Session {
 
 	public function setValue($key, $value) {
 		$_SESSION[$key] = $value;
+		
+		return $this;
 	}
 
 	public function getValue($key) {
@@ -72,6 +76,8 @@ class Session {
 		if (array_key_exists($key,$_SESSION)) {
 			unset($_SESSION[$key]);
 		}
+		
+		return $this;
 	}
 
 }

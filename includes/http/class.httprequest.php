@@ -78,6 +78,8 @@ class HttpRequest extends DynaBean {
 
 	public function setParam($name,$value) {
 		$this->params[$name] = $value;
+		
+		return $this;
 	}
 
 	public static function getHttpRequest()
