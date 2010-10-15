@@ -92,35 +92,53 @@ class HttpRequest extends DynaBean {
 	/**
 		* Retrieve HTTP Method
 		*/
-	function getMethod() {
+	public function getMethod() {
 		return $this->method;
 	}
 
-	function getPathInfo() {
+	public function getPathInfo() {
 		return $this->pathInfo;
 	}
 
 	/**
 		* Retrieve HTTP Body
 		*/
-	function getBody() {
+	public function getBody() {
 		return $this->body;
+	}
+	
+	/**
+	 * Returns true if the request was made with one of the Ajax libraries that adds the "X-Reqested-With" HTTP header, 
+	 * for example: jQuery.
+	 * 
+	 * from http://snipplr.com/view/16624/ 
+	 * 
+	 * @return boolean 
+	 */
+	public function isAjax() {
+		
+		if (!is_null($this->getHeader('X-REQUESTED-WITH')) && $this->getHeader('X-REQUESTED-WITH') === 'XMLHttpRequest') {
+			return true;
+		}
+		
+		return false;
+		
 	}
 
 	/**
 		* Retrieve an HTTP Header
 		* @param string Case-Insensitive HTTP Header Name (eg: "User-Agent")
 		*/
-	function getHeader($name) {
+	public function getHeader($name) {
 		$name = strtoupper($name);
-		return isset($this->headers[$name]) ? $this->headers[$name] : false;
+		return isset($this->headers[$name]) ? $this->headers[$name] : null;
 	}
 
 	/**
 		* Retrieve all HTTP Headers
 		* @return array HTTP Headers
 		*/
-	function getHeaders() {
+	public function getHeaders() {
 		return $this->headers;
 	}
 
@@ -128,7 +146,7 @@ class HttpRequest extends DynaBean {
 		* Return Raw HTTP Request (note: This is incomplete)
 		* @param bool ReBuild the Raw HTTP Request
 		*/
-	function raw($refresh = false) {
+	public function raw($refresh = false) {
 
 		if (isset($this->raw) && !$refresh) {
 			return $this->raw; // return cached
