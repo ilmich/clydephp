@@ -78,7 +78,7 @@ class ClassLoader
 
 	private function _fixPath($path) {
 		 
-		return slash($path);
+		return String::slash($path);
 	}
 
 	public static function autoload($class_name)

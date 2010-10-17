@@ -17,6 +17,7 @@ require CLYDEPHP_ROOT . '/beans.inc.php';
 require CLYDEPHP_ROOT . '/core.inc.php';
 require CLYDEPHP_ROOT . '/functions.inc.php';
 require CLYDEPHP_ROOT . '/compat.inc.php'; //some emulated function for php 5.1
+require CLYDEPHP_ROOT . '/class.string.php'; //some emulated function for php 5.1
 require CLYDEPHP_ROOT . '/class.classloader.php';  // __autoload() is contained in this file
 
 
@@ -29,10 +30,10 @@ addClasspath(CLYDEPHP_ROOT);
 // Fix magic quotes
 if(get_magic_quotes_gpc())
 {
-	$_POST    = fix_slashes($_POST);
-	$_GET     = fix_slashes($_GET);
-	$_REQUEST = fix_slashes($_REQUEST);
-	$_COOKIE  = fix_slashes($_COOKIE);
+	$_POST    = String::fixSlashes($_POST);
+	$_GET     = String::fixSlashes($_GET);
+	$_REQUEST = String::fixSlashes($_REQUEST);
+	$_COOKIE  = String::fixSlashes($_COOKIE);
 }
 
 //enable html exception handler

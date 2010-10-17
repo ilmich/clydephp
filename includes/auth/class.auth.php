@@ -70,7 +70,7 @@ abstract class Auth
 	}
 	
 	public static function configure($params) {
-		self::$me = self::factory($params);	
+		self::$me = self::factory($params);		
 	}
 
 	// You'll typically call this function when a user logs in using

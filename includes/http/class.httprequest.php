@@ -165,7 +165,11 @@ class HttpRequest extends DynaBean {
 	}
 
 	public function redirect($url) {
-		redirect($url);
+		
+		if(is_null($url)) $url = $_SERVER['PHP_SELF'];
+			header("Location: $url");
+		exit();
+		
 	}
 }
 

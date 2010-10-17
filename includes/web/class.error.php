@@ -184,7 +184,7 @@ class Error
 	// Is a string a parseable and valid date?
 	public function date($val, $id)
 	{
-		if(chkdate($val) === false)
+		if(Date::chkdate($val) === false)
 		{
 			$this->add($id, 'Please enter a valid date');
 			return false;
@@ -196,7 +196,7 @@ class Error
 	// Is a birth date at least 18 years old?
 	public function adult($val, $id)
 	{
-		if( dater($val) > ( (date('Y') - 18) . date('-m-d H:i:s') ) )
+		if( Date::dater($val) > ( (date('Y') - 18) . date('-m-d H:i:s') ) )
 		{
 			$this->add($id, 'You must be at least 18 years old.');
 			return false;
