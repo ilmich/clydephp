@@ -1,9 +1,9 @@
 <?php
 
-class HttpResponse extends DynaBean {
+class HttpResponse {
 
 	private $_body;
-	private $_headers = array();
+	private $_headers = array();	
 
 	public function send() {
 			
@@ -13,6 +13,21 @@ class HttpResponse extends DynaBean {
 			
 		echo $this->_body;
 			
+	}
+	
+	public function sendCompressed($encoding="gzip") {
+			
+		$this->addHeader("Content-Encoding",$encoding)
+			 ->compressBody()
+			 ->send();
+			
+	}
+	
+	public function compressBody() {
+
+		$this->_body = gzencode($this->_body, 9,FORCE_GZIP); 
+		
+		return $this;		
 	}
 
 	public function addHeader($name,$value) {
@@ -31,13 +46,14 @@ class HttpResponse extends DynaBean {
 
 	public function setBody($body) {
 		
-		$this->_body = $body;		
+		$this->_body = $body;
+		
 		return $this;
-	}
+	}	
 	
 	public function getBody() {
 		return $this->_body;		
-	}
+	}	
 	
 	public function setStatus($status) {
 		if (is_null($status) || !is_int($status)) {
