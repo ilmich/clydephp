@@ -46,7 +46,7 @@
 					$mtags = false;
 					foreach($value AS $key2 => $value2) {
 						if(is_array($value2)) {
-							$result .= self::xml($value2, $key, $head, $charset, $tab, $nlevel);
+							$result .= self::toXml($value2, $key, $head, $charset, $tab, $nlevel);
 						} else if(trim($value2) != '') {
 							$value2  = (htmlspecialchars($value2) != $value2) ? '<![CDATA[' . $value2 . ']]>' : $value2;
 							$result .= str_repeat($tab, $nlevel) . '<' . $key . '>' . $value2 . '</' . $key . '>' . "\n";
@@ -54,7 +54,7 @@
 						$mtags = true;
 					}
 					if(!$mtags && count($value) > 0) {
-						$result .= self::xml($value, $key, $head, $charset, $tab, $nlevel);
+						$result .= self::toXml($value, $key, $head, $charset, $tab, $nlevel);
 					}
 				} else if(trim($value) != '') {
 					$value   = (htmlspecialchars($value) != $value) ? '<![CDATA[' . $value . ']]>' : $value;
