@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 
 abstract class Auth
 {
@@ -54,18 +54,18 @@ abstract class Auth
 	{
 		
 		if (!Session::getInstance()->isStarted()) {
-			throw new ClydePhpException("Session is not started");
+			throw new ClydePhpException('Session is not started');
 		}
 		
 		if (is_null($params) || !is_array($params) || empty($params)) {
-			throw new ClydePhpException("You must pass a valid array of parameters");
+			throw new ClydePhpException('You must pass a valid array of parameters');
 		}
 		 
 		if (!isset($params['type'])) {
-			throw new ClydePhpException("You must pass a non empty type");
+			throw new ClydePhpException('You must pass a non empty type');
 		}
 		 
-		$adapterName = ucfirst($params['type']."Auth");
+		$adapterName = ucfirst($params['type'].'Auth');
 	
 		return new $adapterName($params);		
 	}

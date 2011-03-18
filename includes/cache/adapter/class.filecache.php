@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 	
 	class FileCache extends BaseClass {
@@ -10,10 +10,10 @@
 			
 			parent::__construct($params);
 			if (is_null($this->getProperty('path'))) 
-				throw new ClydePhpException("Path not configured for cache file store");
+				throw new ClydePhpException('Path not configured for cache file store');
 				
 			if (is_null($this->getProperty('expiration'))) 
-				throw new ClydePhpException("Expiration not configured for cache");
+				throw new ClydePhpException('Expiration not configured for cache');
 				
 			$this->_path = $this->getProperty('path');
 			$this->_expiration = $this->getProperty('expiration');			

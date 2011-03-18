@@ -1,13 +1,13 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 function printr($var)
 {
 	$output = formatText2Html(print_r($var, true));
-	echo "<div style='font-family:courier;'>$output</div>";
+	echo '<div style=\'font-family:courier;\'>'.$output.'</div>';
 }
 
 function formatText2Html($text) {
-	$text = str_replace("\n", "<br>", $text);
+	$text = str_replace("\n", '<br>', $text);
 	$text = str_replace(' ', '&nbsp;', $text);
 	return $text;
 }
@@ -25,10 +25,10 @@ function download_document($filename, $mimetype = 'application/octet-stream')
 	$base = basename($filename);
 
 	$resp = new HttpResponse();
-	$resp->addHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0")
-	->addHeader("Content-Disposition","attachment; filename=$base")
-	->addHeader("Content-Length", filesize($filename))
-	->addHeader("Content-Type",$mimetype)
+	$resp->addHeader('Cache-Control','must-revalidate, post-check=0, pre-check=0')
+	->addHeader('Content-Disposition','attachment; filename=$base')
+	->addHeader('Content-Length', filesize($filename))
+	->addHeader('Content-Type',$mimetype)
 	->setBody(file_get_contents($filename))
 	->send();
 	exit();

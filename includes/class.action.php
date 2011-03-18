@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 class ActionException extends ClydePhpException {
@@ -33,7 +33,7 @@ abstract class Action extends BaseClass{
 	public function processResponse(&$res) {}
 
 	public function __call($name, $arguments) {
-		throw new ActionException("Unknown method ".$name." in ".get_class($this));
+		throw new ActionException('Unknown method '.$name.' in '.get_class($this));
 	}
 
 	abstract public function getMethodName($req);

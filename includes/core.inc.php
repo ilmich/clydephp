@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 
@@ -9,7 +9,7 @@ abstract class BaseClass {
 	public function __construct($params = array()) {
 			
 		if (!is_array($params)) {
-			throw new ClydePhpException("Passing non array params to ".get_class($this)." constructor is not allowed");
+			throw new ClydePhpException('Passing non array params to '.get_class($this).' constructor is not allowed');
 		}
 			
 		$this->_params = $params;
@@ -44,26 +44,24 @@ class ClydePhpException extends Exception {
 
 function clydePhpExceptionHandler($exception){
 
-	echo "<div style='font-family:courier;'>";
-	echo "<u>".get_class($exception).": ".$exception->getMessage()."</u>";
-	echo "<ul style=\"list-style-type:none\">";
-	echo "<li> at (".$exception->getFile().":".$exception->getLine().")";
+	echo '<div style=\'font-family:courier;\'>';
+	echo '<u>'.get_class($exception).': '.$exception->getMessage().'</u>';
+	echo '<ul style=\'list-style-type:none\'>';
+	echo '<li> at ('.$exception->getFile().':'.$exception->getLine().')';
 	foreach ($exception->getTrace() as $trace) {
-		echo "<li> at ";
+		echo '<li> at ';
 		if (isset($trace['class'])){
 			echo $trace['class'].$trace['type'];
 		}
 		echo $trace['function'];
 		if (isset($trace['file'])) {
-			echo "(".$trace['file'].":".$trace['line'].")";
+			echo '('.$trace['file'].':'.$trace['line'].')';
 		}
-		echo "</li>";
+		echo '</li>';
 	}
-	echo "</ul>";
-	echo "</div>";
+	echo '</ul>';
+	echo '</div>';
 
 }
-
-
 
 ?>

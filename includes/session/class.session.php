@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 class Session {
@@ -9,17 +9,17 @@ class Session {
 
 	public function attachSessionStore($obj) {
 		if (!is_object($obj) || !$obj instanceof SessionStore) {
-			throw new ClydePhpException("The store must be a valid SessionStore subclass");
+			throw new ClydePhpException('The store must be a valid SessionStore subclass');
 		}
 			
 		$this->_store = $obj;
 
-		session_set_save_handler(array($obj,"open"),
-		array($obj,"close"),
-		array($obj,"read"),
-		array($obj,"write"),
-		array($obj,"destroy"),
-		array($obj,"gc")
+		session_set_save_handler(array($obj,'open'),
+		array($obj,'close'),
+		array($obj,'read'),
+		array($obj,'write'),
+		array($obj,'destroy'),
+		array($obj,'gc')
 		);
 		
 		return $this;

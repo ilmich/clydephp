@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 	class File {
@@ -7,10 +7,10 @@
 			
 			
 			if ($check && !file_exists($fileName)) {
-				throw new ClydePhpException("Unable to lock: $fileName not found");	
+				throw new ClydePhpException('Unable to lock: $fileName not found');	
 			}
 			
-			$lockDir = $fileName.".lck";			
+			$lockDir = $fileName.'.lck';			
 			
 			$fp=false;		
 			if(!is_int($polling) || $polling < 1) 
@@ -39,7 +39,7 @@
 		
 		public static function release($fileName) {
 				
-			$lockDir = $fileName.".lck";
+			$lockDir = $fileName.'.lck';
 			
 			// Delete the directory with the extension '.lck'
 			if(!@rmdir($lockDir))

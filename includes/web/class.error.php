@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 class Error
 {
 	// Singleton object. Leave $me alone.

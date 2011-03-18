@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 class EventCallback
@@ -58,7 +58,7 @@ class Event
 				$callback = (!empty($callback->context)) ? array($callback->context, $callback->method) : $callback->method;
 				call_user_func_array($callback, $params);
 			}
-			else throw new Exception($callback->method." does not exist");
+			else throw new Exception($callback->method.' does not exist');
 		}
 	}
 }

@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 class Pager implements Iterator
 {
 	// Stuff you set...

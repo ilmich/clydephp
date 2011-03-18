@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 class HttpResponse {
@@ -18,7 +18,7 @@ class HttpResponse {
 	public function send() {
 		
 		if (!is_null($this->_mimetype) && $this->_mimetype !== '')
-			$this->addHeader("Content-Type",$this->_mimetype);
+			$this->addHeader('Content-Type',$this->_mimetype);
 			
 		foreach ($this->_headers as $header) {
 			header($header);
@@ -28,9 +28,9 @@ class HttpResponse {
 			
 	}
 	
-	public function sendCompressed($encoding="gzip") {
+	public function sendCompressed($encoding='gzip') {
 			
-		$this->addHeader("Content-Encoding",$encoding)
+		$this->addHeader('Content-Encoding',$encoding)
 			 ->compressBody()
 			 ->send();
 			
@@ -45,7 +45,7 @@ class HttpResponse {
 
 	public function addHeader($name,$value) {
 		
-		$this->_headers[] = $name.": ".$value;
+		$this->_headers[] = $name.': '.$value;
 		
 		return $this;
 	}
@@ -70,7 +70,7 @@ class HttpResponse {
 	
 	public function setStatus($status) {
 		if (is_null($status) || !is_int($status)) {
-			throw new ClydePhpException("Status must be an integer");
+			throw new ClydePhpException('Status must be an integer');
 		}	
 		
 		$status_header = 'HTTP/1.1 ' . $status . ' ' . $this->getStatusCodeMessage($status);
@@ -83,7 +83,7 @@ class HttpResponse {
 	
 	public function setMimeType($mime) {
 		if (is_null($mime) || !is_string($mime)) {
-			throw new ClydePhpException("MimeType must be a not null string");
+			throw new ClydePhpException('MimeType must be a not null string');
 		}
 		
 		$this->_mimetype = $mime;		
@@ -148,6 +148,4 @@ class HttpResponse {
 	}
 
 }
-
-
 ?>

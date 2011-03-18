@@ -1,4 +1,4 @@
-<?PHP
+<?php
 // Application flag
 define('CLYDEPHP', true);
 
@@ -8,9 +8,9 @@ define('DOC_ROOT', dirname(realpath(__FILE__)).'/../');
 // Determine core spf-ng path
 define('CLYDEPHP_ROOT', realpath(dirname(__FILE__)));
 
-define('CLYDEPHP_VENDOR', DOC_ROOT."vendor/");
+define('CLYDEPHP_VENDOR', DOC_ROOT.'vendor/');
 
-define('APP_ROOT', dirname(realpath($_SERVER["SCRIPT_FILENAME"])).'/');
+define('APP_ROOT', dirname(realpath($_SERVER['SCRIPT_FILENAME'])).'/');
 
 // Global include files
 require CLYDEPHP_ROOT . '/beans.inc.php';
@@ -22,7 +22,7 @@ require CLYDEPHP_ROOT . '/class.classloader.php';  // __autoload() is contained 
 
 
 //register autoload function
-spl_autoload_register("ClassLoader::autoload");
+spl_autoload_register('ClassLoader::autoload');
 
 //add framework dir to classpath
 addClasspath(CLYDEPHP_ROOT);
@@ -42,7 +42,7 @@ if (!isset($_ENV['SHELL']))
 
 //if exists a file with custom boostrap
 //include it
-if (is_file(APP_ROOT."/bootstrap.inc.php")) {
-	require APP_ROOT."/bootstrap.inc.php";
+if (is_file(APP_ROOT.'/bootstrap.inc.php')) {
+	require APP_ROOT.'/bootstrap.inc.php';
 }
 

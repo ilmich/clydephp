@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 // A quick and dirty command line argument parser. Written in about
 // an hour, so you might want to take this with a grain of salt or two.
 //

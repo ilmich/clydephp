@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 	class Cache {
@@ -6,14 +6,14 @@
 		public static function factory($params=array()) {
 			
 			if (is_null($params) || !is_array($params) || empty($params)) {
-				throw new ClydePhpException("You must pass a valid array of parameters");
+				throw new ClydePhpException('You must pass a valid array of parameters');
 			}
 			
 			if (!isset($params['type'])) {
-				throw new ClydePhpException("You must pass a non empty type");
+				throw new ClydePhpException('You must pass a non empty type');
 			}
 			
-			$adapterName = ucfirst($params['type']."Cache");
+			$adapterName = ucfirst($params['type'].'Cache');
 	
 			return new $adapterName($params);	
 			

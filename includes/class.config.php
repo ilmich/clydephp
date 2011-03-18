@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 
 class ConfigException extends ClydePhpException {
 
@@ -54,7 +54,7 @@ class Config
 	private function _parseIniFile($path,$sections) {
 		 
 		if (!is_readable($path)) {
-			throw new ClydePhpException("Config file ".$path." not readable");
+			throw new ClydePhpException('Config file '.$path.' not readable');
 		}
 		 
 		$load = @parse_ini_file($path,$sections);

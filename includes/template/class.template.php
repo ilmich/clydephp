@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 class TemplateException extends ClydePhpException {
@@ -55,7 +55,7 @@ class Template {
 		}
 		
 		if (!is_readable($filename)) {
-			throw new TemplateException("Template ".$filename." not found");
+			throw new TemplateException('Template '.$filename.' not found');
 		}		
 		ob_start();
 
@@ -69,7 +69,7 @@ class Template {
 		try {
 			return $this->render();
 		} catch (Exception $e) {
-			return "Error rendering template: " . $e->getMessage();
+			return 'Error rendering template: ' . $e->getMessage();
 		}
 	}
 }

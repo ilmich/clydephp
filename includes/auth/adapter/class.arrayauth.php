@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 
 class ArrayAuth extends Auth
 {
@@ -9,7 +9,7 @@ class ArrayAuth extends Auth
 	protected function __construct($params) {
 		
 		if (!isset($params['users']) || !is_array($params['users'])) {
-			throw new ClydePhpException("You must pass a valid and non empty array of users");
+			throw new ClydePhpException('You must pass a valid and non empty array of users');
 		}
 		$this->users = $params['users'];
 
@@ -20,14 +20,14 @@ class ArrayAuth extends Auth
 	public function changeUsername($new_username)
 	{
 
-		throw new ClydePhpException("Change username is not allowed");
+		throw new ClydePhpException('Change username is not allowed');
 		 
 	}
 
 	public function changePassword($new_password)
 	{
 		 
-		throw new ClydePhpException("Change password is not allowed");
+		throw new ClydePhpException('Change password is not allowed');
 		 
 	}
 

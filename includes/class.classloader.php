@@ -1,5 +1,5 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
-<?PHP
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
+<?php
 class ClassLoader
 {
 	// Singleton object. Leave $me alone.
@@ -28,14 +28,14 @@ class ClassLoader
 		$path = String::slash($path);
 		
 		if (!file_exists($path) || !is_dir($path)) {
-			throw new ClydePhpException("Unable to add path $path to classloader: is not a dir or not exist");
+			throw new ClydePhpException('Unable to add path '.$path.' to classloader: is not a dir or not exist');
 		}
 		
 		if (!array_search($path,$this->classpath)) {
 			array_unshift($this->classpath,$path);
 		}
 		 
-		$dirs= glob($path."/*",GLOB_ONLYDIR);
+		$dirs= glob($path.'/*',GLOB_ONLYDIR);
 		if ($dirs)
 			foreach ($dirs as $dir) {
 				$this->addClassPath($dir);
@@ -60,13 +60,13 @@ class ClassLoader
 	public static function autoload($class_name)
 	{
 		 
-		$classFile = ClassLoader::getInstance()->findFile("class.".strtolower($class_name) . '.php');
+		$classFile = ClassLoader::getInstance()->findFile('class.'.strtolower($class_name) . '.php');
 		if ($classFile){
 			require $classFile;
 			return;
 		}
 
-		throw new ClydePhpException("Class ".$class_name." does not exist. Check the classpath");
+		throw new ClydePhpException('Class '.$class_name.' does not exist. Check the classpath');
 
 	}
 

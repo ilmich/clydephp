@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die("Direct access not allowed") ;?>
+<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;?>
 <?php
 
 class HttpRequest {
@@ -131,19 +131,19 @@ class HttpRequest {
 	}
 	
 	public function getReferer() {
-		return $this->getHeader("REFERER");
+		return $this->getHeader('REFERER');
 	}
 	
 	public function getUserAgent() {
-		return $this->getHeader("USER-AGENT");
+		return $this->getHeader('USER-AGENT');
 	}
 	
 	public function getQueryString() {
-		return $this->getHeader("QUERY-STRING");
+		return $this->getHeader('QUERY-STRING');
 	}
 	
 	public function getRequestUri() {
-		return $this->getHeader("REQUEST-URI");
+		return $this->getHeader('REQUEST-URI');
 	}
 
 	/**
@@ -165,7 +165,7 @@ class HttpRequest {
 	
 	public function getCompressionEncoding() {
 		
-		$accept = $this->getHeader("ACCEPT-ENCODING");
+		$accept = $this->getHeader('ACCEPT-ENCODING');
 		$encoding = false;
 		
 		if (strpos($accept, 'x-gzip') !== false ){
