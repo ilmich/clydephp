@@ -19,7 +19,8 @@
 			$this->_expiration = $this->getProperty('expiration');			
 		}
 		
-		public function put($key,$value,$tag=null) {			
+		public function put($key,$value,$tag=null) {
+			$path=$this->_path;			
 			if (!is_null($tag)) {
 				$path .= $tag.'/'; 	
 			}
@@ -35,7 +36,8 @@
 			return file_put_contents($filename,serialize(new CacheObject($value,$this->_expiration)));			
 		}	
 
-		public function get($key,$tag=null) {			
+		public function get($key,$tag=null) {
+			$path=$this->_path;			
 			if (!is_null($tag)) {
 				$path .= $tag.'/'; 	
 			}
