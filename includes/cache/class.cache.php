@@ -3,8 +3,7 @@
 
 	class Cache {
 		
-		public static function factory($params=array()) {
-			
+		public static function factory($params=array()) {			
 			if (is_null($params) || !is_array($params) || empty($params)) {
 				throw new ClydePhpException('You must pass a valid array of parameters');
 			}
@@ -15,10 +14,8 @@
 			
 			$adapterName = ucfirst($params['type'].'Cache');
 	
-			return new $adapterName($params);	
-			
-		}
-		
+			return new $adapterName($params);				
+		}		
 	}
 	
 	class CacheObject {
@@ -41,6 +38,6 @@
 		
 		public function setValue($value) {
 			$this->value = $value;
-		}
-		
+		}		
 	}
+	
