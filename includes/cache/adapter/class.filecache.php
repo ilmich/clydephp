@@ -15,13 +15,11 @@
 			if (is_null($this->getProperty('expiration'))) 
 				throw new ClydePhpException('Expiration not configured for cache');
 				
-			$this->_path = $this->getProperty('path');
+			$this->_path = String::slash($this->getProperty('path'));
 			$this->_expiration = $this->getProperty('expiration');			
 		}
 		
 		public function put($key,$value,$tag=null) {			
-			$path = String::slash($this->_path);
-			
 			if (!is_null($tag)) {
 				$path .= $tag.'/'; 	
 			}
@@ -34,12 +32,10 @@
 				return false;
 			
 			$filename = $path.md5($key);
-			file_put_contents($filename,serialize(new CacheObject($value,$this->_expiration)));			
+			return file_put_contents($filename,serialize(new CacheObject($value,$this->_expiration)));			
 		}	
 
 		public function get($key,$tag=null) {			
-			$path = String::slash($this->_path);
-			
 			if (!is_null($tag)) {
 				$path .= $tag.'/'; 	
 			}
@@ -54,5 +50,32 @@
 				return $obj->getValue();
 		
 			return null;			
+		}
+		
+		public function delete($key,$tag=null) {
+			$path=$this->_path;
+			if (!is_null($tag)) {
+				$path .= $tag.'/'; 	
+			}			
+			
+			if (!is_writable($this->_path))
+				return false;
+				
+			return @unlink($path.md5($key));
+		}
+		
+		public function clear($tag=null) {
+			$path=$this->_path;			
+			if (!is_null($tag)) {
+				$path .= $tag.'/'; 	
+			}	
+			
+			if (!is_writable($this->_path))
+				return false;
+				
+			$keys = glob($path.'*');
+			array_map('unlink',$keys);
+			
+			return @rmdir($path);
 		}
 	}
