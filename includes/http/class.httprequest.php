@@ -12,7 +12,7 @@
 		private $protocol;
 		private $requestMethod;
 		private $pathInfo;
-		private $params = array();
+		private $params = array();		
 		 
 		/** additional HTTP headers not prefixed with HTTP_ in $_SERVER superglobal */
 		var $add_headers = array('CONTENT_TYPE', 'CONTENT_LENGTH','QUERY_STRING','REQUEST_URI','PATH_INFO','REMOTE_ADDR');
@@ -188,6 +188,13 @@
 		
 		public function getEtag() {
 			return $this->getHeader('If-None-Match');
+		}
+		
+		public function getCookie($name) {
+			if (isset($_COOKIE[$name])) {
+				return $_COOKIE[$name];
+			}		
+			return null;
 		}
 	
 		/**
