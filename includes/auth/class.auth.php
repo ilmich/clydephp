@@ -13,6 +13,7 @@
 		protected $loggedIn;
 		protected $useHashedPasswords=false;
 		protected $salt;
+		protected $expires;
 	
 		// Call with no arguments to attempt to restore a previous logged in session
 		// which then falls back to a guest user (which can then be logged in using
@@ -32,6 +33,15 @@
 			if (isset($params['salt'])) {
 				$this->salt = $params['salt'];
 			}	
+			
+			if (isset($params['expires'])) {
+				if (is_numeric($params['expires']))
+					$this->$expires = $params['$expires'];
+				else 
+					throw new ClydePhpException('Parameter expires must be a numeric');
+			} else {
+				$this->expires = 0;
+			}
 		}
 	
 		public function init() {
@@ -91,8 +101,14 @@
 			$this->level          = 'guest';
 			$this->loggedIn       = false;
 	
-			Session::getInstance()->setValue('un','');
-			Session::getInstance()->setValue('pw','');
+			$session = Session::getInstance();
+			$sessionName = $session->getSessionName();
+			
+			//destroy session
+			$session->destroy();
+			setrawcookie($sessionName."_tkn",'',0);
+			setrawcookie($sessionName,'',0);			
+			
 		}
 	
 		// Assumes you have already checked for duplicate usernames
@@ -126,25 +142,63 @@
 	
 		// Attempt to login using data stored in the current session
 		protected function attemptSessionLogin() {
-			$sess = Session::getInstance();
-			if (!is_null($sess->getValue('un')) && !is_null($sess->getValue('pw'))) {
-				return $this->attemptLogin($sess->getValue('un'), $sess->getValue('pw'));
-			}
-			return false;
+			$sess = Session::getInstance();			
+			$sessionName = $sess->getSessionName();
+			
+			//get security token
+			$token = HttpRequest::getHttpRequest()->getCookie($sessionName."_tkn");
+			if (String::isNullOrEmpty($token))
+				return false;
+			
+			//explode token
+			list($uid, $expiry, $data, $check) = split("\|", $token ,4);
+			//check if there is a valid session and that the check value returned from client is the same
+			if (String::isNullOrEmpty($sess->getValue('check')) || $sess->getValue('check') !== $check)
+				return false;
+			//compute secret key
+			$k = hash_hmac("sha1", $uid."|".$expiry, $this->salt);
+			
+			$cipher = Cipher::init();
+			//decrypt hashed password						
+			$pw = $cipher->decrypt(hex2bin($data), $k);
+			//compute check						
+			$computedCheck = hash_hmac("sha1", $uid."|".$expiry."|".$pw."|".$sess->getId(), $k);			
+			
+			if ($check !== $computedCheck)
+				return false;			
+			
+			return $this->validateLoginId($uid, $pw);			
 		}
 	
 		// The function that actually verifies an attempted login and
 		// processes it if successful.
 		// Takes a username and a *hashed* password
 		abstract protected function attemptLogin($un, $pw);
+		
+		abstract protected function validateLoginId($id, $pw);
 	
 		// Takes a username and a *hashed* password
 		protected function storeSessionData($un, $pw) {
-			if(headers_sent()) return false;
-			$sessionName = Session::getInstance()->getSessionName();
+			if(headers_sent()) 
+				return false;
 			
-			Session::getInstance()->setValue('un',$un);
-			Session::getInstance()->setValue('pw',$pw);
+			$session = Session::getInstance();			
+			$sessionName = $session->getSessionName();			
+			//compute secret key
+			$k = hash_hmac("sha1", $this->id."|".$this->expires, $this->salt);
+			
+			$cipher = Cipher::init();
+			//encrypt hashed password
+			$data = $cipher->encrypt($pw, $k);
+			//compute check
+			$check = hash_hmac("sha1", $this->id."|".$this->expires."|".$pw."|".$session->getId(), $k);
+			//store check on session
+			$session->setValue('check', $check);
+						
+			//send token to client
+			$token = $this->id."|".$this->expires."|".bin2hex($data)."|".$check;			
+			setrawcookie($sessionName."_tkn",$token);
+			
 			return true;
 		}
 	
@@ -171,5 +225,6 @@
 	
 			return str_shuffle($password);
 		}	
+		
 	}
 	

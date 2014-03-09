@@ -72,5 +72,10 @@
 	
 			return true;
 		}	
+		
+		protected function validateLoginId($id, $pw) {
+			return $this->attemptLogin($id, $pw);
+		}
+
 	}
 	
