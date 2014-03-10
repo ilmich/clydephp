@@ -1,4 +1,4 @@
-<?php if (!defined('CLYDEPHP')) die('Direct access not allowed') ;
+<?php if (!defined('CLYDEPHP'))  { header ('HTTP/1.1 404 Not Found'); exit(1); }
 
 	if (!function_exists('mcrypt_module_open'))
 		throw new ClydePhpException('MCrypt extension is missing!');
