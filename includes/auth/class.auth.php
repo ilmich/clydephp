@@ -152,7 +152,7 @@
 			//explode token
 			list($uid, $expiry, $data, $check) = split("\|", $token ,4);
 			//check if there is a valid session and that the check value returned from client is the same
-			if (String::isNullOrEmpty($sess->getValue('check')) || $sess->getValue('check') !== $check)
+			if (String::isNullOrEmpty($sess->getValue('check')))
 				return false;
 			//compute secret key
 			$k = hash_hmac("sha1", $uid."|".$expiry, $this->salt);
@@ -161,7 +161,7 @@
 			//decrypt hashed password						
 			$pw = $cipher->decrypt(hex2bin($data), $k);
 			//compute check						
-			$computedCheck = hash_hmac("sha1", $uid."|".$expiry."|".$pw."|".$sess->getId(), $k);			
+			$computedCheck = hash_hmac("sha1", $uid."|".$expiry."|".$pw."|".$sess->getValue('check'), $k);			
 			
 			if ($check !== $computedCheck)
 				return false;			
@@ -185,14 +185,16 @@
 			$sessionName = $session->getSessionName();			
 			//compute secret key
 			$k = hash_hmac("sha1", $this->id."|".$this->expires, $this->salt);
+			//compute session key
+			$skey = uniqid($un,true);
+			//store session key
+			$session->setValue('check', $skey);				
 			
 			$cipher = Cipher::init();
 			//encrypt hashed password
 			$data = $cipher->encrypt($pw, $k);
 			//compute check
-			$check = hash_hmac("sha1", $this->id."|".$this->expires."|".$pw."|".$session->getId(), $k);
-			//store check on session
-			$session->setValue('check', $check);
+			$check = hash_hmac("sha1", $this->id."|".$this->expires."|".$pw."|".$skey, $k);
 						
 			//send token to client
 			$token = $this->id."|".$this->expires."|".bin2hex($data)."|".$check;			
