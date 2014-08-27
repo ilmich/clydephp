@@ -20,23 +20,24 @@
 	require CLYDEPHP_ROOT . '/beans.inc.php';
 	require CLYDEPHP_ROOT . '/core.inc.php';
 	require CLYDEPHP_ROOT . '/functions.inc.php';
-	require CLYDEPHP_ROOT . '/compat.inc.php'; //some emulated function
-	require CLYDEPHP_ROOT . '/class.string.php'; 
-	require CLYDEPHP_ROOT . '/class.classloader.php';  // __autoload() is contained in this file
+	require CLYDEPHP_ROOT . '/compat.inc.php'; //some emulated function	
+	require CLYDEPHP_ROOT . '/splclassloader.php';
 	
-	//register autoload function
-	spl_autoload_register('ClassLoader::autoload');
 	
-	//add framework dir to classpath
-	addClasspath(CLYDEPHP_ROOT);
+	//setup base classloader
+	$classLoader = SplClassLoader::getInstance();
+	$classLoader->add('clydephp', CLYDEPHP_ROOT);
+	$classLoader->register(true);
+	
+	use utils\Strings;
 	
 	// Fix magic quotes
 	if(get_magic_quotes_gpc())
 	{
-		$_POST    = String::fixSlashes($_POST);
-		$_GET     = String::fixSlashes($_GET);
-		$_REQUEST = String::fixSlashes($_REQUEST);
-		$_COOKIE  = String::fixSlashes($_COOKIE);
+		$_POST    = Strings::fixSlashes($_POST);
+		$_GET     = Strings::fixSlashes($_GET);
+		$_REQUEST = Strings::fixSlashes($_REQUEST);
+		$_COOKIE  = Strings::fixSlashes($_COOKIE);
 	}
 	
 	//enable html exception handler
